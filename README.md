@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./public/images/brand/wizard-logo.jpg" alt="Make Great Agents wizard logo" width="120" />
+</p>
+
 # Make Great Agents
 
 A community-maintained directory of ready-to-use agent prompts for
