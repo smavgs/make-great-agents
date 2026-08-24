@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./public/images/brand/wizard-logo.jpg" alt="Make Great Agents wizard logo" width="120" />
+  <img src="./public/images/brand/wizard-logo-v2.jpg" alt="Make Great Agents wizard logo" width="150" />
 </p>
 
 # Make Great Agents
