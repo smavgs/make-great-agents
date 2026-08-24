@@ -1,0 +1,16 @@
+{
+  "name": "make-great-agents",
+  "compatibility_date": "2026-08-01",
+  // TODO: once the domain is chosen and added to Cloudflare, list it here, e.g.
+  //   "routes": [
+  //     { "pattern": "makegreatagents.com", "custom_domain": true },
+  //     { "pattern": "www.makegreatagents.com", "custom_domain": true }
+  //   ],
+  // Without routes the site deploys to make-great-agents.<account>.workers.dev.
+  // Pure static site: Wrangler serves the built Astro output as static assets.
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

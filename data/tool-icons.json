@@ -1,0 +1,165 @@
+{
+  "Slack": "https://svgl.app/library/slack.svg",
+  "Gmail": "https://svgl.app/library/gmail.svg",
+  "Notion": "https://svgl.app/library/notion.svg",
+  "Salesforce": "https://svgl.app/library/salesforce.svg",
+  "Google Calendar": "https://svgl.app/library/google-calendar.svg",
+  "Google Drive": "https://svgl.app/library/drive.svg",
+  "Google Sheets": "https://svgl.app/library/google-sheets.svg",
+  "Google Slides": "https://svgl.app/library/google-slides.svg",
+  "Granola": {
+    "light": "https://svgl.app/library/granola-light.svg",
+    "dark": "https://svgl.app/library/granola-dark.svg"
+  },
+  "X": {
+    "light": "https://svgl.app/library/x.svg",
+    "dark": "https://svgl.app/library/x_dark.svg"
+  },
+  "GitHub": {
+    "light": "https://svgl.app/library/github_light.svg",
+    "dark": "https://svgl.app/library/github_dark.svg"
+  },
+  "Grok Bot": {
+    "light": "https://svgl.app/library/grok-light.svg",
+    "dark": "https://svgl.app/library/grok-dark.svg"
+  },
+  "LinkedIn": "https://svgl.app/library/linkedin.svg",
+  "Linear": "https://svgl.app/library/linear.svg",
+  "Figma": "https://svgl.app/library/figma.svg",
+  "Zoom": "https://svgl.app/library/zoom.svg",
+  "YouTube": "https://svgl.app/library/youtube.svg",
+  "TikTok": {
+    "site": "https://www.tiktok.com"
+  },
+  "AITuber": {
+    "site": "https://aituber.app"
+  },
+  "PostHog": "https://svgl.app/library/posthog.svg",
+  "Kobbe": {
+    "site": "https://kobbe.io"
+  },
+  "Datadog": "https://svgl.app/library/datadog.svg",
+  "Reddit": "https://svgl.app/library/reddit.svg",
+  "Outlook": "https://svgl.app/library/microsoft-outlook.svg",
+  "Stripe": "https://svgl.app/library/stripe.svg",
+  "Zendesk": {
+    "light": "https://cdn.simpleicons.org/zendesk",
+    "dark": "https://cdn.simpleicons.org/zendesk/F2F2F2"
+  },
+  "Airtable": "https://cdn.simpleicons.org/airtable",
+  "HubSpot": "https://cdn.simpleicons.org/hubspot",
+  "Snowflake": "https://cdn.simpleicons.org/snowflake",
+  "Hacker News": "https://cdn.simpleicons.org/ycombinator",
+  "Anki": "https://cdn.simpleicons.org/anki",
+  "iCloud": "https://cdn.simpleicons.org/icloud",
+  "Postiz": "https://cdn.simpleicons.org/postiz",
+  "Sales Navigator": "https://svgl.app/library/linkedin.svg",
+  "Apple Search Ads": {
+    "light": "https://svgl.app/library/apple.svg",
+    "dark": "https://svgl.app/library/apple_dark.svg"
+  },
+  "Gong": {
+    "site": "https://www.gong.io"
+  },
+  "Amazon": {
+    "site": "https://www.amazon.com"
+  },
+  "Search Console": {
+    "site": "https://search.google.com/search-console/about"
+  },
+  "Luma": {
+    "site": "https://lu.ma"
+  },
+  "Make Great Agents": {
+    "site": "https://makegreatagents.com"
+  },
+  "Glean": {
+    "site": "https://www.glean.com"
+  },
+  "Ashby": {
+    "site": "https://www.ashbyhq.com"
+  },
+  "DataForSEO": {
+    "site": "https://dataforseo.com"
+  },
+  "Delulu Social": "https://delulu.social/icon.png",
+  "ScreenshotOne": {
+    "site": "https://screenshotone.com"
+  },
+  "Castos": {
+    "site": "https://castos.com"
+  },
+  "FeedHive": {
+    "site": "https://www.feedhive.com"
+  },
+  "Costco": {
+    "site": "https://www.costco.com"
+  },
+  "Aviation Weather Center": {
+    "site": "https://aviationweather.gov"
+  },
+  "Bee": {
+    "site": "https://www.bee.computer"
+  },
+  "Comp AI": {
+    "site": "https://trycomp.ai"
+  },
+  "Converly": {
+    "site": "https://converly.io"
+  },
+  "Axiom": {
+    "site": "https://axiom.co"
+  },
+  "Bible": {
+    "site": "https://www.bible.com"
+  },
+  "Claude Code": "https://cdn.simpleicons.org/claudecode",
+  "Codex": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fopenai.com%2Fcodex%2F&sz=64",
+  "Codex CLI": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fopenai.com%2Fcodex%2F&sz=64",
+  "Cursor Background Agents": "https://cdn.simpleicons.org/cursor",
+  "Cursor Cloud Agents": "https://cdn.simpleicons.org/cursor",
+  "Discord": "https://cdn.simpleicons.org/discord",
+  "ExifTool": {
+    "site": "https://exiftool.org"
+  },
+  "FAA NOTAM Search": {
+    "site": "https://notams.aim.faa.gov/notamSearch/"
+  },
+  "Ferndesk": {
+    "site": "https://ferndesk.com"
+  },
+  "Google Flights": {
+    "site": "https://www.google.com/travel/flights"
+  },
+  "Help Scout": "https://cdn.simpleicons.org/helpscout",
+  "HelpSpot": {
+    "site": "https://www.helpspot.com"
+  },
+  "HireNimbus": {
+    "site": "https://hirenimbus.com"
+  },
+  "Hyperliquid": {
+    "site": "https://hyperliquid.xyz"
+  },
+  "Infisical": {
+    "site": "https://infisical.com"
+  },
+  "Intercom": "https://cdn.simpleicons.org/intercom",
+  "Kindle": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fwww.amazon.com%2Fkindle&sz=64",
+  "Photos": {
+    "site": "https://www.apple.com/ios/photos/"
+  },
+  "QuickBooks": "https://cdn.simpleicons.org/quickbooks",
+  "Trends.vc": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Ftrends.vc&sz=64",
+  "Web Search": {
+    "site": "https://www.google.com"
+  },
+  "Whole Foods": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fwww.wholefoodsmarket.com&sz=64",
+  "Whole Foods delivery": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fwww.wholefoodsmarket.com&sz=64",
+  "Xero": "https://cdn.simpleicons.org/xero",
+  "PostNitro": "https://postnitro.ai/images/avatar.png",
+  "MaxFusion": "https://framerusercontent.com/images/hWslTulYc3xM0lOii2Ht9yskhaU.svg",
+  "Stacktree": {
+    "site": "https://stacktr.ee"
+  }
+}

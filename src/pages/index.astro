@@ -1,0 +1,241 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PrimaryButton from '../components/PrimaryButton.astro';
+import ToolIcon from '../components/ToolIcon.astro';
+import Select from '../components/Select.astro';
+import { FEATURES, SITE } from '../config';
+import { CATEGORIES, catStyle, fmt } from '../lib/constants';
+import { getBots, type Bot } from '../lib/data';
+
+const bots = [...(await getBots())].sort(
+  (a, b) => b.copies - a.copies || a.name.localeCompare(b.name),
+);
+const allTools = [...new Set(bots.flatMap((b) => b.integrations))].sort();
+
+const searchText = (b: Bot) => (b.name + ' ' + b.prompt + ' ' + b.integrations.join(' ')).toLowerCase();
+
+const title = `Codex Agent Prompts & AI Agent Directory | ${SITE.wordmark}`;
+const description =
+  'Browse ready-to-use agent prompts for Codex — email, marketing, sales, ops, and more. Copy a workflow, connect its tools, and launch a scheduled agent in minutes. Works with any agent.';
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SITE.url}/#website`,
+    name: SITE.wordmark,
+    url: SITE.url,
+    description,
+    publisher: {
+      '@type': 'Organization',
+      '@id': `${SITE.url}/#organization`,
+      name: SITE.wordmark,
+      url: SITE.url,
+      sameAs: [SITE.repoUrl],
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${SITE.url}/#directory`,
+    name: 'Codex agent prompt directory',
+    url: SITE.url,
+    description,
+    isPartOf: { '@id': `${SITE.url}/#website` },
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: bots.length,
+      itemListElement: bots.map((bot, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: bot.name,
+        url: `${SITE.url}/bots/${bot.slug}/`,
+      })),
+    },
+  },
+];
+---
+
+<Base title={title} description={description} structuredData={structuredData}>
+  <div class:list={['iz-page-root', { 'hide-copies': !FEATURES.showCopies }]}>
+    <div class="iz-cols" style="grid-template-columns: minmax(0, 1fr);">
+      <div style="min-width: 0;">
+        <Header isHome />
+
+        <section class="hero">
+          <p class="iz-eyebrow">
+            Built for <a href={SITE.codexUrl}>Codex</a> — works with any agent
+          </p>
+          <h1 class="hero-title">The Codex agent directory</h1>
+          <p class="hero-sub">Agents that get stuff done. Copy one prompt into Codex, connect your tools, and it sets itself up — for work, business, or everyday life.</p>
+        </section>
+
+        <section id="browse" class="browse" style="max-width: 1150px;">
+          <div class="iz-browse-grid" style="grid-template-columns: minmax(0, 1fr);">
+            <div style="min-width: 0;">
+              <div class="filterbar">
+                <div class="filterbar-controls">
+                  <input type="text" id="bot-search" class="search-input" placeholder="Search" />
+                  <Select
+                    id="bot-category"
+                    label="Filter by category"
+                    options={[{ value: 'All', label: 'Any category' }, ...CATEGORIES.map((c) => ({ value: c, label: c, swatch: catStyle(c).catFg }))]}
+                  />
+                  <Select
+                    id="bot-integration"
+                    label="Filter by integration"
+                    options={[{ value: 'all', label: 'Any integration' }, ...allTools.map((t) => ({ value: t, label: t, tool: t }))]}
+                  />
+                  <Select
+                    id="bot-sort"
+                    label="Sort bots"
+                    value="newest"
+                    options={[
+                      ...(FEATURES.showCopies ? [{ value: 'copies', label: 'Most copied' }] : []),
+                      { value: 'newest', label: 'Newly added' },
+                      { value: 'name', label: 'A–Z' },
+                    ]}
+                  />
+                  <div class="view-toggle">
+                    <button type="button" id="view-table-btn" class="view-btn active">Table</button>
+                    <button type="button" id="view-cards-btn" class="view-btn">Cards</button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="cards-view" class="cards-grid" hidden>
+                {
+                  bots.map((bot) => (
+                    <a
+                      href={`/bots/${bot.slug}/`}
+                      class="bot-card"
+                      data-slug={bot.slug}
+                      data-name={bot.name}
+                      data-category={bot.category}
+                      data-copies={bot.copies}
+                      data-added-at={bot.addedAt}
+                      data-integrations={bot.integrations.join('|')}
+                      data-search={searchText(bot)}
+                    >
+                      <div class="bot-card-head">
+                        <h3 class="bot-card-title">{bot.name}</h3>
+                      </div>
+                      <div class="card-prompt">{bot.prompt}</div>
+                      <div class="chip-row">
+                        {bot.integrations.map((t) => (
+                          <span class="tool-chip"><ToolIcon name={t} size={14} />{t}</span>
+                        ))}
+                      </div>
+                      <div class="bot-card-meta">
+                        {FEATURES.showCopies && (
+                          <>
+                            <span class="meta-copies" data-copies-slug={bot.slug} data-copies-seed={bot.copies}>{fmt(bot.copies)} copies</span>
+                            <span>·</span>
+                          </>
+                        )}
+                        {bot.contributor && <span class="meta-contrib">@{bot.contributor}</span>}
+                      </div>
+                    </a>
+                  ))
+                }
+              </div>
+
+              <div id="table-view" class="bot-table">
+                <div class="bot-table-head">
+                  <span>Bot</span><span>Category</span><span>Integrations</span>{FEATURES.showCopies && <span>Copies</span>}<span>Source</span>
+                </div>
+                {
+                  bots.map((bot) => (
+                    <a
+                      href={`/bots/${bot.slug}/`}
+                      class="bot-row"
+                      data-slug={bot.slug}
+                      data-name={bot.name}
+                      data-category={bot.category}
+                      data-copies={bot.copies}
+                      data-added-at={bot.addedAt}
+                      data-integrations={bot.integrations.join('|')}
+                      data-search={searchText(bot)}
+                    >
+                      <span class="bot-row-namecell">
+                        <span class="bot-row-nameline">
+                          <span class="bot-row-name">{bot.name}</span>
+                        </span>
+                      </span>
+                      <span
+                        class="cat-pill"
+                        style={`color: ${catStyle(bot.category).catFg}; background: ${catStyle(bot.category).catBg}; border-color: ${catStyle(bot.category).catBorder};`}
+                      >{bot.category}</span>
+                      <span class="bot-row-tools">
+                        {bot.integrations.map((t) => (
+                          <span class="bot-row-tool"><ToolIcon name={t} size={14} />{t}</span>
+                        ))}
+                      </span>
+                      {FEATURES.showCopies && (
+                        <span class="bot-row-copies" data-copies-slug={bot.slug} data-copies-seed={bot.copies}>{fmt(bot.copies)} copies</span>
+                      )}
+                      <span class="bot-row-contrib">{bot.contributor ? `@${bot.contributor}` : '—'}</span>
+                    </a>
+                  ))
+                }
+              </div>
+
+              <div id="empty-state" class="empty-state" hidden>
+                <p class="empty-state-title">No agent for that yet.</p>
+                <p class="empty-state-sub">Write the prompt and open a pull request — it goes live once merged.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <section id="contribute" class="contribute-section">
+      <div class="contribute-inner">
+        <div>
+          <p class="iz-eyebrow">Contribute</p>
+          <h2 class="contribute-title">An agent is one file in a repo</h2>
+          <p class="contribute-copy">
+            No plugin API, no review board. Add a markdown file with the prompt and the integrations it needs, open a
+            pull request, and it shows up here.
+          </p>
+          <div class="cta-row">
+            <PrimaryButton href={SITE.repoUrl}>Open a pull request</PrimaryButton>
+          </div>
+          <a href={SITE.contributingUrl} class="contribute-guide-link">Read the contribution guide →</a>
+          <p class="contribute-alt">
+            Building a bot that watches the directory? <a href="/api/bots.json">Use the public JSON feed</a>
+            — every listing in one request.
+          </p>
+        </div>
+        <div class="file-card">
+          <div class="file-card-head">
+            <span class="file-card-name">bots/seo-improver.md</span>
+          </div>
+          <pre class="file-card-body">---
+name: SEO Improver
+category: Marketing
+added_at: "2026-08-18T12:00:00.000Z"
+contributor: your-handle
+integrations: [GitHub, DataForSEO, Search Console]
+---
+
+Set up a new agent for me. Walk me through
+connecting GitHub, DataForSEO and Google
+Search Console, then schedule it every 2
+weeks: find pages losing impressions or
+sitting on page two, rewrite titles and
+metadata, fix internal links, and open a PR
+I review before merge.</pre>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+  </div>
+
+  <script>
+    import '../scripts/browse';
+  </script>
+</Base>

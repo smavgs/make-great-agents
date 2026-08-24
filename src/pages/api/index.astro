@@ -1,0 +1,102 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE } from '../../config';
+
+const title = `Public API | ${SITE.wordmark}`;
+const description = 'Every agent prompt in the directory, as one JSON feed. Build bots that read it, mirror it, or build on top of it.';
+const rawFeedUrl = `${SITE.url}/api/bots.json`;
+const feedExample = `GET ${rawFeedUrl}
+
+{
+  "bots": [
+    {
+      "slug": "seo-improver",
+      "name": "SEO Improver",
+      "category": "Marketing",
+      "integrations": ["GitHub", "DataForSEO", "Search Console"],
+      "contributor": "your-handle",
+      "addedAt": "2026-08-18T12:00:00.000Z",
+      "url": "${SITE.url}/bots/seo-improver/",
+      "prompt": "…"
+    },
+    …
+  ]
+}`;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: 'Make Great Agents public API',
+  description,
+  url: `${SITE.url}/api/`,
+  about: { '@type': 'WebAPI', name: 'Make Great Agents feed', documentation: `${SITE.url}/api/` },
+};
+---
+
+<Base title={title} description={description} structuredData={structuredData}>
+  <div class="iz-page-root">
+    <Header />
+
+    <main class="api-page">
+      <div class="breadcrumb">
+        <a href="/">All agents</a>
+        <span>/</span>
+        <span>API</span>
+      </div>
+
+      <p class="iz-eyebrow">Public API</p>
+      <h1 class="api-title">A directory agents can read</h1>
+      <p class="api-lead">
+        The whole catalog is one static JSON file, rebuilt on every merge. No keys, no rate limits, no CORS trouble —
+        fetch it, filter it client-side, or keep a local mirror. To add an agent,
+        <a href={SITE.repoUrl}>open a pull request</a>.
+      </p>
+
+      <div class="api-endpoint-card">
+        <span class="api-method">GET</span>
+        <a href="/api/bots.json" class="api-endpoint">{rawFeedUrl}</a>
+      </div>
+
+      <section class="api-doc-section">
+        <h2>The feed</h2>
+        <p>
+          Returns the complete catalog in one request — every agent with its slug, name, category, integrations,
+          contributor, and the full prompt text. Filter and search it locally; the file is small enough to hold in
+          memory.
+        </p>
+        <pre class="api-code"><code>{feedExample}</code></pre>
+        <p class="api-note">Regenerated whenever a pull request merges — refetch to pick up new agents.</p>
+      </section>
+
+      <section class="api-doc-section">
+        <h2>Fields</h2>
+        <div class="api-table-wrap">
+          <table class="api-param-table">
+            <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td><code>slug</code></td><td>Stable id; also the file name in <code>bots/</code></td></tr>
+              <tr><td><code>name</code></td><td>Listing title</td></tr>
+              <tr><td><code>category</code></td><td>One of the curated categories in CONTRIBUTING</td></tr>
+              <tr><td><code>integrations</code></td><td>Tool names the prompt connects</td></tr>
+              <tr><td><code>contributor</code></td><td>Handle of whoever added it (optional)</td></tr>
+              <tr><td><code>addedAt</code></td><td>ISO timestamp from the markdown frontmatter</td></tr>
+              <tr><td><code>url</code></td><td>Canonical page for the agent</td></tr>
+              <tr><td><code>prompt</code></td><td>The prompt body, verbatim</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="api-doc-section">
+        <h2>Send this page to a bot</h2>
+        <p>
+          This page is readable without JavaScript. Give an agent <code>{SITE.url}/api/</code> and ask it to mirror the
+          directory, watch for new listings, or open a PR that adds one.
+        </p>
+      </section>
+    </main>
+
+    <Footer />
+  </div>
+</Base>

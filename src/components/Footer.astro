@@ -1,0 +1,30 @@
+---
+import { SITE } from '../config';
+---
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="footer-wordmark">{SITE.wordmark}</a>
+      <p class="footer-blurb">{SITE.tagline}</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <span class="footer-col-title">Directory</span>
+        <a href="/#browse" class="footer-link">Browse agents</a>
+        <a href="/#contribute" class="footer-link">Add an agent</a>
+        <a href="/api/" class="footer-link">API</a>
+        <a href={SITE.repoUrl} class="footer-link">GitHub</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title">Run your agents</span>
+        <a href={SITE.codexUrl} class="footer-link">OpenAI Codex</a>
+        <a href={SITE.codexCliUrl} class="footer-link">Codex CLI</a>
+        <a href={SITE.codexGithubUrl} class="footer-link">Codex on GitHub</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copyright">© {SITE.copyrightYear} {SITE.copyrightHolder}</span>
+  </div>
+</footer>
