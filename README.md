@@ -52,3 +52,5 @@ pnpm build      # static build in dist/
 pnpm validate   # check every file in agents/
 pnpm check      # astro check (types)
 ```
+
+`[Donate](https://donatr.ee/aegiswizard?utm_source=copy&utm_medium=share) - Aegis Wizard 🧙‍♂️`
