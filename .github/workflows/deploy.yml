@@ -38,6 +38,11 @@ jobs:
           base64 --decode .github/pages/global.css.gz.b64 | gzip -dc > src/styles/global.css
           echo "758f662070ecaa3994a117d836150c1a63abd604312076cd6308ff237b56cd82  src/styles/global.css" | sha256sum -c -
 
+      - name: Restore crisp social preview
+        run: |
+          cat .github/pages/og-wizard-v3.part-*.b64 | tr -d '\n' | base64 --decode > public/og-wizard-v3.jpg
+          echo "8866044d4ac5d5936a28b3d24ff019ff8bb16dbf02785c369aad508824fdc44f  public/og-wizard-v3.jpg" | sha256sum -c -
+
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
