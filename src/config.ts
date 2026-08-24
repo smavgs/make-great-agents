@@ -13,9 +13,9 @@ export const SITE = {
   /** Site name for structured data. */
   shortName: 'Make Great Agents',
 
-  /** Public GitHub repo. TODO: set the real owner/repo once created. */
-  repoUrl: 'https://github.com/makegreatagents/make-great-agents',
-  contributingUrl: 'https://github.com/makegreatagents/make-great-agents/blob/main/CONTRIBUTING.md',
+  /** Public GitHub repo. */
+  repoUrl: 'https://github.com/smavgs/make-great-agents',
+  contributingUrl: 'https://github.com/smavgs/make-great-agents/blob/main/CONTRIBUTING.md',
 
   /** Products linked from the header / footer / copy — Codex first. */
   codexUrl: 'https://openai.com/codex',
