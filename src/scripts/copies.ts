@@ -4,7 +4,7 @@
 import { COPIES_API } from '../config';
 import { fmt } from '../lib/constants';
 
-const KEY = 'openbots-copies';
+const KEY = 'openagents-copies';
 const knownCounts = new Map<string, number>();
 const copiedThisPage = new Set<string>();
 

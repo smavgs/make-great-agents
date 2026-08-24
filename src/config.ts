@@ -38,7 +38,7 @@ export const COPIES_API = {
 
 export const FEATURES = {
   /**
-   * Show copy counts (table column, card meta, bot-page badge) and the
+   * Show copy counts (table column, card meta, agent-page badge) and the
    * "Most copied" sort. Needs the copies backend above — off for launch.
    */
   showCopies: false,

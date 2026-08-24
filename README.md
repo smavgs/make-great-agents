@@ -7,7 +7,7 @@ worker: email triage, daily briefings, SEO fixes, churn warnings, and more.
 
 ## Add your agent in 2 minutes
 
-An agent is one markdown file in [`bots/`](bots/):
+An agent is one markdown file in [`agents/`](agents/):
 
 ```markdown
 ---
@@ -24,7 +24,7 @@ impressions or sitting on page two, rewrite titles and metadata, fix internal
 links, and open a PR I review before merge.
 ```
 
-1. Fork this repo and add `bots/<slug>.md` (slug = name, lowercased,
+1. Fork this repo and add `agents/<slug>.md` (slug = name, lowercased,
    non-alphanumerics → `-`).
 2. Open a pull request. CI validates the file; once merged it's live.
 
@@ -32,7 +32,7 @@ Full contract, category list, and quality bar: [CONTRIBUTING.md](CONTRIBUTING.md
 
 ## Public feed
 
-`GET https://makegreatagents.com/api/bots.json` returns every listing — slug,
+`GET https://makegreatagents.com/api/agents.json` returns every listing — slug,
 name, category, integrations, contributor, and the full prompt — as one static
 JSON file rebuilt on every merge. Full contract on the
 [API page](https://makegreatagents.com/api/).
@@ -45,6 +45,6 @@ Astro static site, TypeScript, pnpm, no UI framework.
 pnpm install
 pnpm dev        # http://localhost:4321
 pnpm build      # static build in dist/
-pnpm validate   # check every file in bots/
+pnpm validate   # check every file in agents/
 pnpm check      # astro check (types)
 ```

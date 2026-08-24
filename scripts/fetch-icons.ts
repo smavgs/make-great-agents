@@ -14,7 +14,7 @@
  *
  * Curated files are committed. `pnpm icons:sync` additionally fills gaps at
  * deploy time: it discovers exact Simple Icons matches and uses Google's
- * favicon proxy for official `integration_urls` stored in bot frontmatter.
+ * favicon proxy for official `integration_urls` stored in agent frontmatter.
  * Unknown/generic integrations still receive the UI's monogram fallback.
  *
  * Output: public/icons/<slugify(name)>.<ext>, plus <slug>-dark.<ext> for the
@@ -153,11 +153,11 @@ async function simpleIconUrl(name: string): Promise<string | null> {
   return null;
 }
 
-function botIntegrations(): Map<string, string | undefined> {
+function agentIntegrations(): Map<string, string | undefined> {
   const result = new Map<string, string | undefined>();
-  const botsDir = join(ROOT, 'bots');
-  for (const file of readdirSync(botsDir).filter((name) => name.endsWith('.md'))) {
-    const raw = readFileSync(join(botsDir, file), 'utf8');
+  const agentsDir = join(ROOT, 'agents');
+  for (const file of readdirSync(agentsDir).filter((name) => name.endsWith('.md'))) {
+    const raw = readFileSync(join(agentsDir, file), 'utf8');
     const frontmatter = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
     if (!frontmatter) continue;
     const data = parseYaml(frontmatter[1]!) as {
@@ -249,8 +249,8 @@ for (const [name, entry] of Object.entries(manifest as Record<string, Entry>)) {
 }
 
 if (sync) {
-  console.log('\nSyncing icons for integrations used by bot files…');
-  for (const [name, site] of botIntegrations()) {
+  console.log('\nSyncing icons for integrations used by agent files…');
+  for (const [name, site] of agentIntegrations()) {
     const slug = slugify(name);
     if (hasIcon(slug)) continue;
 

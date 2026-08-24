@@ -1,7 +1,7 @@
 name: via-x guard
 
-# Hard boundary for auto-merged bot submissions: a PR labeled `via-x`
-# (opened by the X mention bot) may ONLY add markdown bot files. Any other
+# Hard boundary for auto-merged agent submissions: a PR labeled `via-x`
+# (opened by the X mention agent) may ONLY add markdown agent files. Any other
 # change — modified files, deletions, workflows, config, data — fails this
 # required check, which blocks auto-merge. Unlabeled (human) PRs pass
 # trivially; they are never auto-merged anyway.
@@ -30,10 +30,10 @@ jobs:
           if [ ! -s files.tsv ]; then echo "Empty diff."; exit 1; fi
           bad=0
           while IFS=$'\t' read -r status file; do
-            if [ "$status" = "added" ] && printf '%s' "$file" | grep -Eq '^bots/[a-z0-9][a-z0-9-]*\.md$'; then
+            if [ "$status" = "added" ] && printf '%s' "$file" | grep -Eq '^agents/[a-z0-9][a-z0-9-]*\.md$'; then
               echo "ok: added $file"
             else
-              echo "::error::forbidden change: $status $file (via-x PRs may only ADD bots/*.md)"
+              echo "::error::forbidden change: $status $file (via-x PRs may only ADD agents/*.md)"
               bad=1
             fi
           done < files.tsv

@@ -7,14 +7,14 @@ import ToolIcon from '../components/ToolIcon.astro';
 import Select from '../components/Select.astro';
 import { FEATURES, SITE } from '../config';
 import { CATEGORIES, catStyle, fmt } from '../lib/constants';
-import { getBots, type Bot } from '../lib/data';
+import { getAgents, type Agent } from '../lib/data';
 
-const bots = [...(await getBots())].sort(
+const agents = [...(await getAgents())].sort(
   (a, b) => b.copies - a.copies || a.name.localeCompare(b.name),
 );
-const allTools = [...new Set(bots.flatMap((b) => b.integrations))].sort();
+const allTools = [...new Set(agents.flatMap((b) => b.integrations))].sort();
 
-const searchText = (b: Bot) => (b.name + ' ' + b.prompt + ' ' + b.integrations.join(' ')).toLowerCase();
+const searchText = (b: Agent) => (b.name + ' ' + b.prompt + ' ' + b.integrations.join(' ')).toLowerCase();
 
 const title = `Codex Agent Prompts & AI Agent Directory | ${SITE.wordmark}`;
 const description =
@@ -45,12 +45,12 @@ const structuredData = [
     isPartOf: { '@id': `${SITE.url}/#website` },
     mainEntity: {
       '@type': 'ItemList',
-      numberOfItems: bots.length,
-      itemListElement: bots.map((bot, index) => ({
+      numberOfItems: agents.length,
+      itemListElement: agents.map((agent, index) => ({
         '@type': 'ListItem',
         position: index + 1,
-        name: bot.name,
-        url: `${SITE.url}/bots/${bot.slug}/`,
+        name: agent.name,
+        url: `${SITE.url}/agents/${agent.slug}/`,
       })),
     },
   },
@@ -76,20 +76,20 @@ const structuredData = [
             <div style="min-width: 0;">
               <div class="filterbar">
                 <div class="filterbar-controls">
-                  <input type="text" id="bot-search" class="search-input" placeholder="Search" />
+                  <input type="text" id="agent-search" class="search-input" placeholder="Search" />
                   <Select
-                    id="bot-category"
+                    id="agent-category"
                     label="Filter by category"
                     options={[{ value: 'All', label: 'Any category' }, ...CATEGORIES.map((c) => ({ value: c, label: c, swatch: catStyle(c).catFg }))]}
                   />
                   <Select
-                    id="bot-integration"
+                    id="agent-integration"
                     label="Filter by integration"
                     options={[{ value: 'all', label: 'Any integration' }, ...allTools.map((t) => ({ value: t, label: t, tool: t }))]}
                   />
                   <Select
-                    id="bot-sort"
-                    label="Sort bots"
+                    id="agent-sort"
+                    label="Sort agents"
                     value="newest"
                     options={[
                       ...(FEATURES.showCopies ? [{ value: 'copies', label: 'Most copied' }] : []),
@@ -106,76 +106,76 @@ const structuredData = [
 
               <div id="cards-view" class="cards-grid" hidden>
                 {
-                  bots.map((bot) => (
+                  agents.map((agent) => (
                     <a
-                      href={`/bots/${bot.slug}/`}
-                      class="bot-card"
-                      data-slug={bot.slug}
-                      data-name={bot.name}
-                      data-category={bot.category}
-                      data-copies={bot.copies}
-                      data-added-at={bot.addedAt}
-                      data-integrations={bot.integrations.join('|')}
-                      data-search={searchText(bot)}
+                      href={`/agents/${agent.slug}/`}
+                      class="agent-card"
+                      data-slug={agent.slug}
+                      data-name={agent.name}
+                      data-category={agent.category}
+                      data-copies={agent.copies}
+                      data-added-at={agent.addedAt}
+                      data-integrations={agent.integrations.join('|')}
+                      data-search={searchText(agent)}
                     >
-                      <div class="bot-card-head">
-                        <h3 class="bot-card-title">{bot.name}</h3>
+                      <div class="agent-card-head">
+                        <h3 class="agent-card-title">{agent.name}</h3>
                       </div>
-                      <div class="card-prompt">{bot.prompt}</div>
+                      <div class="card-prompt">{agent.prompt}</div>
                       <div class="chip-row">
-                        {bot.integrations.map((t) => (
+                        {agent.integrations.map((t) => (
                           <span class="tool-chip"><ToolIcon name={t} size={14} />{t}</span>
                         ))}
                       </div>
-                      <div class="bot-card-meta">
+                      <div class="agent-card-meta">
                         {FEATURES.showCopies && (
                           <>
-                            <span class="meta-copies" data-copies-slug={bot.slug} data-copies-seed={bot.copies}>{fmt(bot.copies)} copies</span>
+                            <span class="meta-copies" data-copies-slug={agent.slug} data-copies-seed={agent.copies}>{fmt(agent.copies)} copies</span>
                             <span>·</span>
                           </>
                         )}
-                        {bot.contributor && <span class="meta-contrib">@{bot.contributor}</span>}
+                        {agent.contributor && <span class="meta-contrib">@{agent.contributor}</span>}
                       </div>
                     </a>
                   ))
                 }
               </div>
 
-              <div id="table-view" class="bot-table">
-                <div class="bot-table-head">
-                  <span>Bot</span><span>Category</span><span>Integrations</span>{FEATURES.showCopies && <span>Copies</span>}<span>Source</span>
+              <div id="table-view" class="agent-table">
+                <div class="agent-table-head">
+                  <span>Agent</span><span>Category</span><span>Integrations</span>{FEATURES.showCopies && <span>Copies</span>}<span>Source</span>
                 </div>
                 {
-                  bots.map((bot) => (
+                  agents.map((agent) => (
                     <a
-                      href={`/bots/${bot.slug}/`}
-                      class="bot-row"
-                      data-slug={bot.slug}
-                      data-name={bot.name}
-                      data-category={bot.category}
-                      data-copies={bot.copies}
-                      data-added-at={bot.addedAt}
-                      data-integrations={bot.integrations.join('|')}
-                      data-search={searchText(bot)}
+                      href={`/agents/${agent.slug}/`}
+                      class="agent-row"
+                      data-slug={agent.slug}
+                      data-name={agent.name}
+                      data-category={agent.category}
+                      data-copies={agent.copies}
+                      data-added-at={agent.addedAt}
+                      data-integrations={agent.integrations.join('|')}
+                      data-search={searchText(agent)}
                     >
-                      <span class="bot-row-namecell">
-                        <span class="bot-row-nameline">
-                          <span class="bot-row-name">{bot.name}</span>
+                      <span class="agent-row-namecell">
+                        <span class="agent-row-nameline">
+                          <span class="agent-row-name">{agent.name}</span>
                         </span>
                       </span>
                       <span
                         class="cat-pill"
-                        style={`color: ${catStyle(bot.category).catFg}; background: ${catStyle(bot.category).catBg}; border-color: ${catStyle(bot.category).catBorder};`}
-                      >{bot.category}</span>
-                      <span class="bot-row-tools">
-                        {bot.integrations.map((t) => (
-                          <span class="bot-row-tool"><ToolIcon name={t} size={14} />{t}</span>
+                        style={`color: ${catStyle(agent.category).catFg}; background: ${catStyle(agent.category).catBg}; border-color: ${catStyle(agent.category).catBorder};`}
+                      >{agent.category}</span>
+                      <span class="agent-row-tools">
+                        {agent.integrations.map((t) => (
+                          <span class="agent-row-tool"><ToolIcon name={t} size={14} />{t}</span>
                         ))}
                       </span>
                       {FEATURES.showCopies && (
-                        <span class="bot-row-copies" data-copies-slug={bot.slug} data-copies-seed={bot.copies}>{fmt(bot.copies)} copies</span>
+                        <span class="agent-row-copies" data-copies-slug={agent.slug} data-copies-seed={agent.copies}>{fmt(agent.copies)} copies</span>
                       )}
-                      <span class="bot-row-contrib">{bot.contributor ? `@${bot.contributor}` : '—'}</span>
+                      <span class="agent-row-contrib">{agent.contributor ? `@${agent.contributor}` : '—'}</span>
                     </a>
                   ))
                 }
@@ -205,13 +205,13 @@ const structuredData = [
           </div>
           <a href={SITE.contributingUrl} class="contribute-guide-link">Read the contribution guide →</a>
           <p class="contribute-alt">
-            Building a bot that watches the directory? <a href="/api/bots.json">Use the public JSON feed</a>
+            Building an agent that watches the directory? <a href="/api/agents.json">Use the public JSON feed</a>
             — every listing in one request.
           </p>
         </div>
         <div class="file-card">
           <div class="file-card-head">
-            <span class="file-card-name">bots/seo-improver.md</span>
+            <span class="file-card-name">agents/seo-improver.md</span>
           </div>
           <pre class="file-card-body">---
 name: SEO Improver

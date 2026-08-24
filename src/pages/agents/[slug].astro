@@ -1,0 +1,189 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ToolIcon from '../../components/ToolIcon.astro';
+import { FEATURES, SITE } from '../../config';
+import { catStyle, fmt } from '../../lib/constants';
+import { getAgents, type Agent } from '../../lib/data';
+
+export async function getStaticPaths() {
+  const agents = await getAgents();
+  return agents.map((agent) => ({ params: { slug: agent.slug }, props: { agent, agents } }));
+}
+
+interface Props {
+  agent: Agent;
+  agents: Agent[];
+}
+
+const { agent, agents } = Astro.props;
+const cat = catStyle(agent.category);
+
+const sameCategory = agents.filter((x) => x.slug !== agent.slug && x.category === agent.category).slice(0, 3);
+const related = sameCategory.length ? sameCategory : agents.filter((x) => x.slug !== agent.slug).slice(0, 3);
+const relatedTitle = sameCategory.length ? `More ${agent.category.toLowerCase()} agents` : 'Other agents';
+
+const title = `${agent.name} — a Codex agent prompt you can copy | ${SITE.wordmark}`;
+const description = `Copy the ${agent.name} prompt to set up an agent on ${agent.integrations.join(', ')}. Paste it into Codex or any agent you already use and it walks you through the setup.`;
+const pageUrl = `${SITE.url}/agents/${agent.slug}/`;
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: `${agent.name} agent prompt`,
+    url: pageUrl,
+    description,
+    genre: agent.category,
+    keywords: [agent.category, ...agent.integrations, 'AI agent prompt', 'Codex prompt'],
+    isAccessibleForFree: true,
+    isPartOf: { '@type': 'WebSite', name: SITE.wordmark, url: SITE.url },
+    ...(agent.contributor && {
+      creator: {
+        '@type': 'Person',
+        name: agent.contributor,
+        url: agent.contributorUrl ?? `https://github.com/${agent.contributor}`,
+      },
+    }),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'All agents', item: `${SITE.url}/` },
+      { '@type': 'ListItem', position: 2, name: agent.category, item: `${SITE.url}/?category=${encodeURIComponent(agent.category)}` },
+      { '@type': 'ListItem', position: 3, name: agent.name, item: pageUrl },
+    ],
+  },
+];
+---
+
+<Base title={title} description={description} type="article" structuredData={structuredData}>
+  <Header />
+
+  <article class="agent-article" data-slug={agent.slug}>
+    <div class="breadcrumb">
+      <a href="/">All agents</a>
+      <span>/</span>
+      <a href={`/?category=${encodeURIComponent(agent.category)}`}>{agent.category}</a>
+    </div>
+
+    <h1 class="agent-title">{agent.name}</h1>
+
+    <div class="badge-row">
+      <span class="badge-cat" style={`color: ${cat.catFg}; background: ${cat.catBg}; border-color: ${cat.catBorder};`}>{agent.category}</span>
+      {FEATURES.showCopies && (
+        <span class="badge-plain" data-copies-slug={agent.slug} data-copies-seed={agent.copies}>{fmt(agent.copies)} copies</span>
+      )}
+      {
+        (agent.contributor || agent.addedVia || agent.scoutedBy) && (
+          <span class="attribution">
+          {agent.addedVia ? (
+            <>
+              Based on <a href={agent.addedVia}>this post</a>
+              {agent.contributor && (
+                <>
+                  {'by '}
+                  <a href={agent.contributorUrl ?? `https://x.com/${agent.contributor}`}>@{agent.contributor}</a>
+                </>
+              )}
+            </>
+          ) : (
+            agent.contributor && (
+              <>
+                Contributed by{' '}
+                <a href={agent.contributorUrl ?? `https://github.com/${agent.contributor}`}>@{agent.contributor}</a>
+              </>
+            )
+          )}
+          {agent.scoutedBy && (
+            <>
+              {' · scouted by '}
+              <a href={`https://x.com/${agent.scoutedBy}`}>@{agent.scoutedBy}</a>
+            </>
+          )}
+          </span>
+        )
+      }
+    </div>
+
+    <section class="prompt-section">
+      <div class="prompt-head">
+        <h2 class="section-title">The prompt</h2>
+        <button type="button" class="copy-btn" data-copy-slug={agent.slug} data-copied-label="Copied">Copy prompt</button>
+      </div>
+      <div class="prompt-block" id="prompt-block">{agent.prompt}</div>
+      <p class="section-note">
+        Paste it into <a href={SITE.codexUrl}>Codex</a> or any agent you already use. It asks for what it needs, then
+        saves itself as an agent.
+      </p>
+    </section>
+
+    <section class="connect-section">
+      <h2 class="section-title">Connect first</h2>
+      <div class="connect-chips">
+        {
+          agent.integrations.map((t) => (
+            <span class="connect-chip"><ToolIcon name={t} size={18} />{t}</span>
+          ))
+        }
+      </div>
+      <p class="section-note">The prompt asks for these as it goes — however you normally connect them works.</p>
+    </section>
+
+    <section class="cta-card">
+      <div>
+        <p class="cta-title">Run {agent.name} yourself</p>
+        <p class="cta-sub">Free to copy, adapt, and edit after setup.</p>
+      </div>
+      <div class="cta-actions">
+        <div class="pbtn-wrap">
+          <button type="button" class="pbtn pbtn-44" data-copy-slug={agent.slug} data-copied-label="Copied — now open your agent">Copy and set up</button>
+        </div>
+        <a href={`${SITE.repoUrl}/blob/main/agents/${agent.slug}.md`} class="btn-view-source">View source</a>
+      </div>
+    </section>
+
+    <section class="related-section">
+      <h2 class="section-title">{relatedTitle}</h2>
+      <div class="related-grid">
+        {
+          related.map((x) => (
+            <a href={`/agents/${x.slug}/`} class="related-card">
+              <span class="related-name">{x.name}</span>
+              <span class="related-meta">
+                {x.integrations.slice(0, 2).join(', ')}{FEATURES.showCopies && (
+                  <> · <span data-copies-slug={x.slug} data-copies-seed={x.copies}>{fmt(x.copies)} copies</span></>
+                )}
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </article>
+
+  <Footer />
+</Base>
+
+<script>
+  import { loadCopyCounts, trackCopy, refreshCopyLabels } from '../../scripts/copies';
+
+  const promptBlock = document.getElementById('prompt-block');
+  const prompt = promptBlock?.textContent ?? '';
+  const buttons = document.querySelectorAll<HTMLElement>('[data-copy-slug]');
+
+  buttons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      if (navigator.clipboard && prompt) navigator.clipboard.writeText(prompt).catch(() => {});
+      trackCopy(btn.dataset.copySlug || '');
+      buttons.forEach((b) => {
+        b.textContent = b.dataset.copiedLabel || 'Copied';
+      });
+      refreshCopyLabels();
+    })
+  );
+
+  refreshCopyLabels();
+  void loadCopyCounts();
+</script>

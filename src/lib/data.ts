@@ -2,7 +2,7 @@ import { getCollection } from 'astro:content';
 import { slugify, type Category } from './constants';
 import { COPIES_API } from '../config';
 
-export interface Bot {
+export interface Agent {
   slug: string;
   name: string;
   category: Category;
@@ -66,10 +66,10 @@ export function toolIcon(name: string): ToolIcon | null {
   return dark ? { light, dark } : { light };
 }
 
-/** All bots in a stable A–Z build order; the browser applies the selected sort. */
-export async function getBots(): Promise<Bot[]> {
-  const [entries, copyCounts] = await Promise.all([getCollection('bots'), getCopyCounts()]);
-  const bots = entries.map((e) => ({
+/** All agents in a stable A–Z build order; the browser applies the selected sort. */
+export async function getAgents(): Promise<Agent[]> {
+  const [entries, copyCounts] = await Promise.all([getCollection('agents'), getCopyCounts()]);
+  const agents = entries.map((e) => ({
     slug: e.id,
     name: e.data.name,
     category: e.data.category,
@@ -83,5 +83,5 @@ export async function getBots(): Promise<Bot[]> {
     url: e.data.url,
     addedVia: e.data.added_via,
   }));
-  return bots.sort((a, b) => a.name.localeCompare(b.name));
+  return agents.sort((a, b) => a.name.localeCompare(b.name));
 }

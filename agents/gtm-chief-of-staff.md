@@ -1,0 +1,11 @@
+---
+name: GTM Chief Of Staff
+category: Sales
+added_at: "2026-08-17T19:08:55.000Z"
+contributor: kristaletz
+contributor_url: https://x.com/kristaletz
+integrations: [Salesforce, Gmail, Google Calendar, Slack, Granola]
+added_via: https://x.com/kristaletz/status/2089103618121314689
+---
+
+Set up a new agent for me to act as my chief of staff for enterprise sales, and pin it. Walk me through connecting Salesforce, Gmail, Google Calendar, Slack and Granola, then configure it: it owns my meeting prep, my inbox and my post-call drafts, and it orchestrates the rest of my agents — spinning up new specialist agents when a job needs one, calling my slides agent for decks, and organizing my agents into sections. Every so often it reviews all my agents and routines and tells me what to automate, parallelize or clean up. Nothing sends or changes in Salesforce without me. Learn how I write from my sent mail and Slack first, ask me which agents I already run and what I want on my phone during the commute, then save it.

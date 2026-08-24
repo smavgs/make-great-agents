@@ -28,7 +28,7 @@ jobs:
       - name: Install
         run: pnpm install --no-frozen-lockfile --ignore-scripts
 
-      - name: Validate bot files
+      - name: Validate agent files
         run: pnpm validate
 
       - name: Type check

@@ -1,11 +1,11 @@
 # Contributing
 
-An agent is one markdown file in `bots/`. Add the file, open a pull request, and it
+An agent is one markdown file in `agents/`. Add the file, open a pull request, and it
 shows up on the site. No plugin API, no review board.
 
 ## The agent file contract
 
-`bots/<slug>.md` — the slug is the `name` lowercased with every run of
+`agents/<slug>.md` — the slug is the `name` lowercased with every run of
 non-alphanumerics replaced by `-` (e.g. `SEO Improver` → `seo-improver`).
 
 ```markdown
@@ -19,7 +19,7 @@ scouted_by: someoneelse                  # optional — handle of whoever found/
 integrations: [GitHub, DataForSEO, Search Console]
 integration_urls:                       # optional; lets deploy fetch missing favicons
   DataForSEO: https://dataforseo.com
-url: https://example.com/my-bot          # optional — canonical homepage (dedupe key)
+url: https://example.com/my-agent          # optional — canonical homepage (dedupe key)
 ---
 
 <the prompt, verbatim, as the file body>

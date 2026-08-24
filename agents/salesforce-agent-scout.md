@@ -1,0 +1,13 @@
+---
+name: Salesforce Agent Scout
+category: Productivity
+added_at: "2026-08-18T06:04:36.000Z"
+contributor: elie2222
+contributor_url: https://x.com/elie2222
+scouted_by: colinpthomson
+integrations: [Make Great Agents, Salesforce]
+url: https://makegreatagents.com
+added_via: https://x.com/elie2222/status/2089466150417514631
+---
+
+Set up a new agent for me I can trigger for Salesforce product research. Walk me through connecting Make Great Agents, then configure it: find every agent in the directory with a Salesforce integration, summarize what each one does, and turn the patterns into ideas for new Salesforce product functionality. Ask me which Salesforce products, customer segments, and product areas matter most, do the first research run with me watching, then save it.

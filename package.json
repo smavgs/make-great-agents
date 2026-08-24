@@ -9,7 +9,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "validate": "tsx scripts/validate-bots.ts",
+    "validate": "tsx scripts/validate-agents.ts",
     "astro": "astro",
     "icons": "tsx scripts/fetch-icons.ts",
     "icons:sync": "tsx scripts/fetch-icons.ts --sync"

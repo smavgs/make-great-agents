@@ -1,4 +1,4 @@
-/** Shared, framework-free constants (also used by scripts/validate-bots.ts). */
+/** Shared, framework-free constants (also used by scripts/validate-agents.ts). */
 
 export const CATEGORIES = ['Productivity', 'Sales', 'Marketing', 'Ops', 'Success', 'Personal'] as const;
 export type Category = (typeof CATEGORIES)[number];

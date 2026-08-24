@@ -5,10 +5,10 @@ import Footer from '../components/Footer.astro';
 import PrimaryButton from '../components/PrimaryButton.astro';
 import { FEATURES, SITE } from '../config';
 import { catStyle, fmt } from '../lib/constants';
-import { getBots } from '../lib/data';
+import { getAgents } from '../lib/data';
 
-const bots = await getBots();
-const top = [...bots]
+const agents = await getAgents();
+const top = [...agents]
   .sort((a, b) => b.copies - a.copies || a.name.localeCompare(b.name))
   .slice(0, 10);
 
@@ -26,12 +26,12 @@ const structuredData = [
     about: { '@type': 'Thing', name: 'Codex', url: SITE.codexUrl },
     mainEntity: {
       '@type': 'ItemList',
-      numberOfItems: bots.length,
-      itemListElement: top.map((bot, index) => ({
+      numberOfItems: agents.length,
+      itemListElement: top.map((agent, index) => ({
         '@type': 'ListItem',
         position: index + 1,
-        name: bot.name,
-        url: `${SITE.url}/bots/${bot.slug}/`,
+        name: agent.name,
+        url: `${SITE.url}/agents/${agent.slug}/`,
       })),
     },
   },
@@ -49,14 +49,14 @@ const structuredData = [
 <Base title={title} description={description} structuredData={structuredData}>
   <Header />
 
-  <article class="bot-article">
+  <article class="agent-article">
     <div class="breadcrumb">
       <a href="/">All agents</a>
       <span>/</span>
       <span>Codex</span>
     </div>
 
-    <h1 class="bot-title">Codex prompts and workflows</h1>
+    <h1 class="agent-title">Codex prompts and workflows</h1>
 
     <section class="prompt-section">
       <h2 class="section-title" style="margin-bottom: 12px;">What is Codex?</h2>
@@ -74,25 +74,25 @@ const structuredData = [
         Every agent in this directory is a copy-paste prompt published as an editable Markdown file in a public GitHub
         repository. The same prompts also run in any other agent you already use. Here are ten to get started:
       </p>
-      <div class:list={['bot-table', { 'hide-copies': !FEATURES.showCopies }]}>
-        <div class="bot-table-head">
+      <div class:list={['agent-table', { 'hide-copies': !FEATURES.showCopies }]}>
+        <div class="agent-table-head">
           <span>Agent</span><span>Category</span><span>Integrations</span>{FEATURES.showCopies && <span>Copies</span>}<span>Source</span>
         </div>
         {
           top.map((b) => (
-            <a href={`/bots/${b.slug}/`} class="bot-row">
-              <span class="bot-row-namecell">
-                <span class="bot-row-nameline">
-                  <span class="bot-row-name">{b.name}</span>
+            <a href={`/agents/${b.slug}/`} class="agent-row">
+              <span class="agent-row-namecell">
+                <span class="agent-row-nameline">
+                  <span class="agent-row-name">{b.name}</span>
                 </span>
               </span>
               <span
                 class="cat-pill"
                 style={`color: ${catStyle(b.category).catFg}; background: ${catStyle(b.category).catBg}; border-color: ${catStyle(b.category).catBorder};`}
               >{b.category}</span>
-              <span class="bot-row-tools">{b.integrations.join(', ')}</span>
-              {FEATURES.showCopies && <span class="bot-row-copies">{fmt(b.copies)} copies</span>}
-              <span class="bot-row-contrib">{b.contributor ? `@${b.contributor}` : '—'}</span>
+              <span class="agent-row-tools">{b.integrations.join(', ')}</span>
+              {FEATURES.showCopies && <span class="agent-row-copies">{fmt(b.copies)} copies</span>}
+              <span class="agent-row-contrib">{b.contributor ? `@${b.contributor}` : '—'}</span>
             </a>
           ))
         }
@@ -101,7 +101,7 @@ const structuredData = [
 
     <section class="cta-card">
       <div>
-        <p class="cta-title">Browse all {bots.length} agents</p>
+        <p class="cta-title">Browse all {agents.length} agents</p>
         <p class="cta-sub">Filter by category or integration, copy a prompt, done.</p>
       </div>
       <div class="cta-actions">

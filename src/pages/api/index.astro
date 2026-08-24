@@ -5,12 +5,12 @@ import Footer from '../../components/Footer.astro';
 import { SITE } from '../../config';
 
 const title = `Public API | ${SITE.wordmark}`;
-const description = 'Every agent prompt in the directory, as one JSON feed. Build bots that read it, mirror it, or build on top of it.';
-const rawFeedUrl = `${SITE.url}/api/bots.json`;
+const description = 'Every agent prompt in the directory, as one JSON feed. Build agents that read it, mirror it, or build on top of it.';
+const rawFeedUrl = `${SITE.url}/api/agents.json`;
 const feedExample = `GET ${rawFeedUrl}
 
 {
-  "bots": [
+  "agents": [
     {
       "slug": "seo-improver",
       "name": "SEO Improver",
@@ -18,7 +18,7 @@ const feedExample = `GET ${rawFeedUrl}
       "integrations": ["GitHub", "DataForSEO", "Search Console"],
       "contributor": "your-handle",
       "addedAt": "2026-08-18T12:00:00.000Z",
-      "url": "${SITE.url}/bots/seo-improver/",
+      "url": "${SITE.url}/agents/seo-improver/",
       "prompt": "…"
     },
     …
@@ -55,7 +55,7 @@ const structuredData = {
 
       <div class="api-endpoint-card">
         <span class="api-method">GET</span>
-        <a href="/api/bots.json" class="api-endpoint">{rawFeedUrl}</a>
+        <a href="/api/agents.json" class="api-endpoint">{rawFeedUrl}</a>
       </div>
 
       <section class="api-doc-section">
@@ -75,7 +75,7 @@ const structuredData = {
           <table class="api-param-table">
             <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
             <tbody>
-              <tr><td><code>slug</code></td><td>Stable id; also the file name in <code>bots/</code></td></tr>
+              <tr><td><code>slug</code></td><td>Stable id; also the file name in <code>agents/</code></td></tr>
               <tr><td><code>name</code></td><td>Listing title</td></tr>
               <tr><td><code>category</code></td><td>One of the curated categories in CONTRIBUTING</td></tr>
               <tr><td><code>integrations</code></td><td>Tool names the prompt connects</td></tr>
@@ -89,7 +89,7 @@ const structuredData = {
       </section>
 
       <section class="api-doc-section">
-        <h2>Send this page to a bot</h2>
+        <h2>Send this page to an agent</h2>
         <p>
           This page is readable without JavaScript. Give an agent <code>{SITE.url}/api/</code> and ask it to mirror the
           directory, watch for new listings, or open a PR that adds one.

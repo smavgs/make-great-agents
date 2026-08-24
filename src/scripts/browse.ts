@@ -12,10 +12,10 @@ interface BrowseState {
 }
 
 function init(): void {
-  const search = document.getElementById('bot-search') as HTMLInputElement | null;
-  const category = document.getElementById('bot-category') as HTMLInputElement | null;
-  const integration = document.getElementById('bot-integration') as HTMLInputElement | null;
-  const sort = document.getElementById('bot-sort') as HTMLInputElement | null;
+  const search = document.getElementById('agent-search') as HTMLInputElement | null;
+  const category = document.getElementById('agent-category') as HTMLInputElement | null;
+  const integration = document.getElementById('agent-integration') as HTMLInputElement | null;
+  const sort = document.getElementById('agent-sort') as HTMLInputElement | null;
   const btnTable = document.getElementById('view-table-btn');
   const btnCards = document.getElementById('view-cards-btn');
   const tableView = document.getElementById('table-view');
@@ -47,10 +47,10 @@ function init(): void {
     (!q || (row.dataset.search || '').includes(q));
 
   function applyTo(container: HTMLElement): number {
-    const botRows = Array.from(container.querySelectorAll<HTMLElement>('[data-slug]'));
+    const agentRows = Array.from(container.querySelectorAll<HTMLElement>('[data-slug]'));
     const q = state.query.trim().toLowerCase();
 
-    const visible = botRows.filter((r) => matches(r, q));
+    const visible = agentRows.filter((r) => matches(r, q));
     visible.sort((a, b) => {
       if (state.sort === 'name') return (a.dataset.name || '').localeCompare(b.dataset.name || '');
       if (state.sort === 'newest') {
@@ -61,7 +61,7 @@ function init(): void {
         (a.dataset.name || '').localeCompare(b.dataset.name || '');
     });
 
-    const hiddenRows = botRows.filter((r) => !visible.includes(r));
+    const hiddenRows = agentRows.filter((r) => !visible.includes(r));
 
     for (const r of visible) r.hidden = false;
     for (const r of hiddenRows) r.hidden = true;
