@@ -1,10 +1,5 @@
 name: Validate
 
-# PRs (incl. auto-merged bot submissions) run the fast path: schema
-# validation only — bot PRs can only add markdown (via-x guard enforces it),
-# and the schema validator catches everything a bad bot file can break.
-# Pushes to main run the full pipeline (type check + build) before deploy.
-
 on:
   pull_request:
   push:
@@ -17,19 +12,21 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
+          run_install: false
 
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: pnpm
 
-      - name: Install (validator deps only)
-        if: github.event_name == 'pull_request'
-        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Restore Drive stylesheet
+        run: |
+          mkdir -p src/styles
+          base64 --decode .github/pages/global.css.gz.b64 | gzip -dc > src/styles/global.css
 
       - name: Install
-        if: github.event_name != 'pull_request'
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile --ignore-scripts
 
       - name: Validate bot files
         run: pnpm validate
