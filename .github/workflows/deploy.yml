@@ -36,6 +36,7 @@ jobs:
         run: |
           mkdir -p src/styles
           base64 --decode .github/pages/global.css.gz.b64 | gzip -dc > src/styles/global.css
+          echo "9ee1a437ca409f93a80d6d27bded388a480ab806fffe2025e03c6f361fbe4ae6  src/styles/global.css" | sha256sum -c -
 
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
